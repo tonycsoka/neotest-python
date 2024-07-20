@@ -30,6 +30,10 @@ function M.get_python_command(root)
   end
   -- Use activated virtualenv.
   if vim.env.VIRTUAL_ENV then
+    if vim.loop.os_uname().sysname == "Windows" then
+      python_command_mem[root] = { Path:new(vim.env.VIRTUAL_ENV, "Scripts", "python.exe").filename }
+      return python_command_mem[root]
+    end
     python_command_mem[root] = { Path:new(vim.env.VIRTUAL_ENV, "bin", "python").filename }
     return python_command_mem[root]
   end
